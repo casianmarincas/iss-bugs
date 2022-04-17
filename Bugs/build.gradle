@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
+    id 'org.beryx.jlink' version '2.24.1'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+application {
+    mainClass = 'bugs.StartApplication'
+}
+
+javafx {
+    version = '17.0.1'
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+dependencies {
+    implementation('org.controlsfx:controlsfx:11.1.0')
+    implementation('com.dlsc.formsfx:formsfx-core:11.3.2') {
+        exclude(group: 'org.openjfx')
+    }
+    implementation('org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0')
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+
+    implementation group: 'com.google.guava', name: 'guava', version: '31.0.1-jre'
+
+    runtimeOnly group: 'org.xerial', name: 'sqlite-jdbc', version: '3.36.0.3'
+}
+
+test {
+    useJUnitPlatform()
+}
