@@ -1,17 +1,30 @@
 package model;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@javax.persistence.Entity(name="User")
+@Table(name="users")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="user_type",
+        discriminatorType = DiscriminatorType.STRING)
 public class User extends Entity<Long>{
 
+    @Column(name="full_name")
     private String fullName;
+
     private String username;
+
     private String password;
 
     public User(String fullName, String username, String password) {
         this.fullName = fullName;
         this.username = username;
         this.password = password;
+    }
+
+    public User() {
+
     }
 
     public String getFullName() {

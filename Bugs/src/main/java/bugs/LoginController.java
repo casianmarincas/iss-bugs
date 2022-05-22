@@ -21,6 +21,7 @@ public class LoginController extends AbstractController{
     @FXML
     private PasswordField passwordText;
 
+    @FXML
     private ToggleGroup toggleGroup;
 
     protected LoginController(Service service) {

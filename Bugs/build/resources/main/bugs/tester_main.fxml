@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
@@ -12,10 +13,10 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="465.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bugs.TesterMainController">
    <children>
-      <TextField layoutX="71.0" layoutY="83.0" prefHeight="26.0" prefWidth="458.0" promptText="search bugs" />
+      <TextField fx:id="search" layoutX="71.0" layoutY="83.0" prefHeight="26.0" prefWidth="458.0" promptText="search bugs" />
       <VBox layoutX="573.0" layoutY="229.0" prefHeight="227.0" prefWidth="229.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="238.0" text="Add new bug" />
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAddBugButtonPressed" prefHeight="62.0" prefWidth="238.0" text="Add new bug" />
             <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="238.0" text="Bugs I added" />
             <Button fx:id="manageAccountButton" mnemonicParsing="false" onAction="#onManageAccountButtonPressed" prefHeight="62.0" prefWidth="238.0" text="Manage account" />
             <Button mnemonicParsing="false" onAction="#onLogoutButtonPressed" prefHeight="59.0" prefWidth="230.0" text="Logout" />
@@ -23,32 +24,9 @@
       </VBox>
       <Line endX="36.4000244140625" endY="210.20001220703125" layoutX="518.0" layoutY="233.0" startX="36.4000244140625" startY="-165.79998779296875" />
       <ScrollPane layoutX="71.0" layoutY="118.0" prefHeight="300.0" prefWidth="458.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="334.0" prefWidth="437.0">
-               <children>
-                  <VBox alignment="CENTER" layoutX="14.0" layoutY="18.0" prefHeight="118.0" prefWidth="116.0" style="-fx-background-color: blue;">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="BUG 1" textAlignment="CENTER" wrappingWidth="115.51134872436523">
-                           <font>
-                              <Font size="22.0" />
-                           </font>
-                        </Text>
-                        <Button alignment="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="116.0" text="See details" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" layoutX="153.0" layoutY="18.0" prefHeight="118.0" prefWidth="116.0" style="-fx-background-color: blue;">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="BUG 2" textAlignment="CENTER" wrappingWidth="115.51134872436523">
-                           <font>
-                              <Font size="22.0" />
-                           </font>
-                        </Text>
-                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="116.0" text="See details" />
-                     </children>
-                  </VBox>
-                  <VBox layoutX="292.0" layoutY="18.0" prefHeight="118.0" prefWidth="116.0" style="-fx-background-color: blue;" />
-               </children></AnchorPane>
-        </content>
+         <content>
+            <FlowPane fx:id="scrollPane" prefHeight="322.0" prefWidth="438.0" stylesheets="@../css/view-bugs.css" />
+         </content>
       </ScrollPane>
       <Pane layoutX="583.0" layoutY="30.0" prefHeight="106.0" prefWidth="194.0" style="-fx-background-color: grey;">
          <children>

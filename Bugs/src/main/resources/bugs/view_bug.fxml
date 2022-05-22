@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="411.0" prefWidth="634.0" stylesheets="@../css/view-bugs.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bugs.ViewBugController">
+   <children>
+      <Text fx:id="titleText" layoutX="95.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" wrappingWidth="300.53664779663086">
+         <font>
+            <Font name="Cascadia Mono Regular" size="30.0" />
+         </font>
+      </Text>
+      <VBox layoutX="95.0" layoutY="85.0" prefHeight="166.0" prefWidth="444.0">
+         <children>
+            <HBox prefHeight="40.0" prefWidth="444.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Project name:" textAlignment="RIGHT" wrappingWidth="164.53672790527344">
+                     <font>
+                        <Font name="Cascadia Mono Regular" size="20.0" />
+                     </font>
+                  </Text>
+                  <TextFlow fx:id="projectTextFlow" prefHeight="22.0" prefWidth="280.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="69.0" prefWidth="444.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" textAlignment="RIGHT" wrappingWidth="164.53672790527344">
+                     <font>
+                        <Font name="Cascadia Mono Regular" size="20.0" />
+                     </font>
+                  </Text>
+                  <TextFlow fx:id="descriptionTextFlow" prefHeight="67.0" prefWidth="278.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="40.0" prefWidth="444.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Status:" textAlignment="RIGHT" wrappingWidth="164.53672790527344">
+                     <font>
+                        <Font name="Cascadia Mono Regular" size="20.0" />
+                     </font>
+                  </Text>
+                  <TextFlow fx:id="statusTextFlow" prefHeight="40.0" prefWidth="286.0" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Button fx:id="addButton1" layoutX="438.0" layoutY="33.0" mnemonicParsing="false" onAction="#onGoBackButtonPressed" prefHeight="26.0" prefWidth="165.0" text="Go back">
+         <font>
+            <Font name="Cascadia Mono Regular" size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="actionButton" layoutX="125.0" layoutY="298.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="384.0" text="Button" />
+   </children>
+</AnchorPane>

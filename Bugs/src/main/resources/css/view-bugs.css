@@ -1,0 +1,17 @@
+
+
+#vBoxBug {
+    -fx-border-color: #080c15;
+    -fx-border-radius: 30;
+    -fx-background-radius: 30;
+    -fx-pref-height: 70;
+    -fx-pref-width: 150;
+    -fx-spacing: 4;
+    -fx-padding: 10;
+}
+
+#bugTitle {
+    -fx-font-family: "Cascadia Mono";
+    -fx-font-size: 18px;
+    -fx-fill: black;
+}

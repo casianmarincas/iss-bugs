@@ -1,79 +1,30 @@
 package repository;
 
 import model.Programmer;
+import model.Tester;
+import model.User;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Properties;
+import javax.persistence.Query;
 
-public class ProgrammersRepository implements Repository<Programmer, Long>{
-
-    private final JdbcUtils dbUtils;
-
-    public ProgrammersRepository(Properties props) {
-        dbUtils = new JdbcUtils(props);
-    }
-
-    @Override
-    public void add(Programmer element) {
-
-    }
-
-    @Override
-    public void delete(Programmer element) {
-
-    }
-
-    @Override
-    public void update(Programmer element) {
-        Connection connection = dbUtils.getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement("update users set password = ? where id = ?")) {
-            preparedStatement.setString(1, element.getPassword());
-            preparedStatement.setLong(2, element.getId());
-            int result = preparedStatement.executeUpdate();
-        } catch (SQLException ex) {
-            System.err.println("Error DB " + ex);
-        }
-    }
-
-    @Override
-    public Programmer findOne(Long elementId) {
-        return null;
-    }
-
-    @Override
-    public Iterable<Programmer> findAll() {
-        return null;
+public class ProgrammersRepository extends AbstractHibernateRepository<Programmer, Long>{
+    public ProgrammersRepository() {
+        super(Programmer.class);
     }
 
     public Programmer findOneByUsernameAndPassword(String username, String password) {
-        Connection connection = dbUtils.getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement("select * from users where username = ? and password = ?")) {
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (!resultSet.next()) {
-                    throw new RuntimeException("Element not found!");
-                }
-                Long id = resultSet.getLong("id");
-                String name = resultSet.getString("full_name");
-
-                String type = resultSet.getString("type");
-                if (! type.equals("programmer")) {
-                    throw new RuntimeException("Element not found!");
-                }
-
-                Programmer programmer = new Programmer(name, username, password);
-                programmer.setId(id);
-                return programmer;
+        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+            Transaction tx = session.beginTransaction();
+            Query query = session.createQuery("from Programmer where username=:username and password=:password");
+            query.setParameter("username", username);
+            query.setParameter("password", password);
+            var result = query.getResultList();
+            if (result.size() == 0) {
+                throw new RuntimeException("No such user!");
             }
-
-        } catch (SQLException ex) {
-            System.err.println("Error DB " + ex);
+            tx.commit();
+            return (Programmer) result.get(0);
         }
-        return null;
     }
-
 }

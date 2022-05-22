@@ -1,80 +1,30 @@
 package repository;
 
+import model.Programmer;
 import model.Tester;
+import model.User;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Properties;
+import javax.persistence.Query;
 
-public class TestersRepository implements Repository<Tester, Long> {
-
-    private final JdbcUtils dbUtils;
-
-    public TestersRepository(Properties props) {
-        dbUtils = new JdbcUtils(props);
+public class TestersRepository extends AbstractHibernateRepository<Tester, Long> {
+    public TestersRepository() {
+        super(Tester.class);
     }
-
-    @Override
-    public void add(Tester element) {
-
-    }
-
-    @Override
-    public void delete(Tester element) {
-
-    }
-
-    @Override
-    public void update(Tester element) {
-        Connection connection = dbUtils.getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement("update users set password = ? where id = ?")) {
-            preparedStatement.setString(1, element.getPassword());
-            preparedStatement.setLong(2, element.getId());
-            int result = preparedStatement.executeUpdate();
-        } catch (SQLException ex) {
-            System.err.println("Error DB " + ex);
-        }
-    }
-
-    @Override
-    public Tester findOne(Long elementId) {
-        return null;
-    }
-
-    @Override
-    public Iterable<Tester> findAll() {
-        return null;
-    }
-
 
     public Tester findOneByUsernameAndPassword(String username, String password) {
-        Connection connection = dbUtils.getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement("select * from users where username = ? and password = ?")) {
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (!resultSet.next()) {
-                    throw new RuntimeException("Element not found!");
-                }
-                Long id = resultSet.getLong("id");
-                String name = resultSet.getString("full_name");
-
-                String type = resultSet.getString("type");
-                if (! type.equals("tester")) {
-                    throw new RuntimeException("Element not found!");
-                }
-
-                Tester tester = new Tester(name, username, password);
-                tester.setId(id);
-                return tester;
+        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+            Transaction tx = session.beginTransaction();
+            Query query = session.createQuery("from Tester where username=:username and password=:password");
+            query.setParameter("username", username);
+            query.setParameter("password", password);
+            var result = query.getResultList();
+            if (result.size() == 0) {
+                throw new RuntimeException("No such user!");
             }
-
-        } catch (SQLException ex) {
-            System.err.println("Error DB " + ex);
+            tx.commit();
+            return (Tester) result.get(0);
         }
-        return null;
     }
-
 }
